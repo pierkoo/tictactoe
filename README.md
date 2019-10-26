@@ -6,4 +6,5 @@ Right now computer is making random moves - some logic to be implemented in the 
 
 ## Known bugs:
 ~~Printing improper name during player vs computer, when player begins.~~
-Corrected - now game starts correctly in any case. 
+
+Corrected - now game starts correctly in any case.
