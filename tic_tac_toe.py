@@ -45,7 +45,6 @@ def update_board(cor,player,board):
 def print_g(game): #simplest posiible solution to print board-like table
 	print('',game[0],'\n',game[1],'\n',game[2])		
 
-
 def draw_board(board):
 	size=range(len(board))
 	top=''.join([' ___' for e in size])
@@ -85,6 +84,7 @@ def check_winner(board):
 	return result		
 
 def players():
+	bot=0
 	while True:
 		players=int(input('How many players? '))
 		if players == 2:
@@ -95,10 +95,10 @@ def players():
 				start=(input('Do you want to start? y/n? '))
 				if start=='y':
 					print('You wil play as Player 1!')
-					players=3
+					bot=2
 					break
 				elif start=='n':
-					players=4
+					bot=1
 					print('You wil play as Player 2!')
 					break
 				else:
@@ -106,46 +106,53 @@ def players():
 			break
 		else:
 			print('Please specify correct number of players: 1 or 2')
-	return players 
+	return [players,bot] 
 
-def game(start):
-	if start==2:
+def swap(a):
+	return a%2+1
+
+def game(players_qty,bot):
+	print(' ')
+	if players_qty==2:
 		print('Welcome in Tic Tac Toe for 2 players!')
 	else:	
 		print('Welcome in Tic Tac Toe for 1 player!')
 
+
 	board = [[0,0,0],
-	[0,0,0],
-	[0,0,0]]
-	counter=0 #this is implicit - to be straighten out
+			 [0,0,0],
+		     [0,0,0]]
+	player=0
+	 #this is implicit - to be straighten out
 	cor_h=[]
 	cont=True
 
 	draw_board(board)
 	
 	while cont==True:
-		player=counter%2+1
-
+		player=swap(player)
 		print('Player',player)
-		if start==2:
+
+		if bot==0:
 			cors=get_input(cor_h)
 		else:
-			if player==1:
+			if player==bot:
 				cors=bot_input(cor_h)
 			else:	
 				cors=get_input(cor_h)	
+
 		cor=cors[0]
 		cor_h=cors[1]
 		board=update_board(cor,player,board)
 		draw_board(board)
 		cont=check_winner(board)
-		counter+=1	
+		#counter+=1	
 
 	
 
 def tic_tac_toe():
-	player=players()
-	game(player)
+	gamemode=players()	 # Ask for game mode- pvp or pve
+	game(*gamemode)		 # Run the game
 
 
 
